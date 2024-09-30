@@ -1,9 +1,85 @@
-*{margin: 0px; padding: 0px;}
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet");
 
-body{font-family: "Playfair Display", serif;}
+* {
+    margin: 0;
+    padding: 0;
+}
 
-.bg-blue{background: #0008a3;}
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+html {
+    scroll-behavior: smooth;
+  }
+  
+body {
+    font-family: "Playfair Display", serif;
+}
 
-.headerWrapper .top-strip{padding: 8px 0px;}
-.headerWrapper .top-strip h1{color: #fff; font-size: 20px;}
+.bg-blue {
+    background: #04f192;
+}
+
+.headerWrapper .top-strip {
+    padding: 8px 0px;
+}
+
+.headerWrapper .top-strip .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Menyebar logo ke kiri dan teks ke kanan */
+}
+
+.logoWrapper img {
+    width: 100px; /* Atur ukuran logo sesuai kebutuhan */
+}
+
+.textWrapper h1 {
+    color: #f6f5fb;
+    font-size: 20px;
+    margin: 0;
+    text-align: left; /* Agar teks rata kiri */
+}
+
+.headerWrapper .header {
+    width: 100%;
+    height: auto;
+    padding: 15px 0px;
+}
+
+.logoWrapper img {
+    width: 100%; /* Anda bisa mengatur ulang ukuran jika diperlukan */
+}
+
+.headerWrapper .header .part2 .countryDrop {
+    width: 150px;
+    height: 80px;
+    min-width: 150px;
+}
+/* Menempatkan isi navbar di tengah */
+.navbar .navbar-nav {
+    margin-left: auto; /* Mengatur margin kiri otomatis untuk menempatkan isi di tengah */
+    margin-right: auto; /* Mengatur margin kanan otomatis untuk menempatkan isi di tengah */
+  }
+  
+  /* Untuk memastikan tombol login berada di sebelah kanan */
+  .navbar .nav-item:last-child {
+    margin-left: auto; /* Memastikan tombol login berada di paling kanan */
+  }
+  
+.navbar-light .navbar-nav .nav-link {
+    color: #000;
+    font-size: 18px;
+    margin-right: 15px;
+  }
+  
+  .navbar-light .navbar-nav .nav-link:hover {
+    color: #04f192;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 24px;
+  }
+  section {
+    padding: 50px 0; /* Memberikan padding vertikal pada setiap section */
+  }
+    
