@@ -82,4 +82,53 @@ body {
   section {
     padding: 50px 0; /* Memberikan padding vertikal pada setiap section */
   }
-    
+/* src/components/Sertifikasi.css */
+.sertifikasi-container {
+  padding: 50px 20px;
+  text-align: center;
+  min-height: 100vh; /* Full page height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: #333; /* Warna teks gelap */
+  margin-bottom: 20px;
+}
+
+.sertifikasi-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background-color: #007bff; /* Warna biru hanya pada card */
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+  color: white; /* Teks warna putih di atas card biru */
+  transition: transform 0.3s ease;
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90%; /* Pastikan card responsif di layar kecil */
+  }
+}
+
+

@@ -1,0 +1,33 @@
+.beranda-section {
+    padding: 50px 0;
+    text-align: center;
+  }
+  .beranda-container {
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+   
+  .canvas-container {
+    width: 100%;
+    height: 500px; /* Atur ukuran kanvas */
+    margin-top: 20px;
+    max-width: 600px; /* Tentukan lebar maksimal untuk model 3D */
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    color: #333;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
