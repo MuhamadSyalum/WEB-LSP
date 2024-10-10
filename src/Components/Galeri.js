@@ -3,7 +3,12 @@ import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import './Galeri.css';  // Style tambahan untuk slider
+import './Galeri.css';  
+import image1 from '../assets/images/image1.jpg';
+import image2 from '../assets/images/image2.jpg';
+import image3 from '../assets/images/image3.jpg';
+import image4 from '../assets/images/image4.jpg';
+import image5 from '../assets/images/image5.jpg';
 
 const Galeri = () => {
   // Pengaturan untuk slider react-slick
@@ -37,11 +42,11 @@ const Galeri = () => {
 
   // Data gambar slider
   const images = [
-    { src: '/path/to/image1.jpg', alt: 'Foto 1' },
-    { src: '/path/to/image2.jpg', alt: 'Foto 2' },
-    { src: '/path/to/image3.jpg', alt: 'Foto 3' },
-    { src: '/path/to/image4.jpg', alt: 'Foto 4' },
-    { src: '/path/to/image5.jpg', alt: 'Foto 5' },
+    { src: image1, alt: 'Foto 1' },
+    { src: image2, alt: 'Foto 2' },
+    { src: image3, alt: 'Foto 3' },
+    { src: image4, alt: 'Foto 4' },
+    { src: image5, alt: 'Foto 5' },
   ];
 
   return (

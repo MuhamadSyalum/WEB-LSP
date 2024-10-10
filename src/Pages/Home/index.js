@@ -1,13 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Beranda from '../../Components/Beranda'; 
+import Beranda from '../../Components/Beranda';
+import Tentang from '../../Components/Tentang';
 import Galeri from '../../Components/Galeri';
+
 
 const Home = () => {
   return (
     <div>
       {/* Memanggil komponen Beranda dan Galeri */}
       <Beranda />
+      <Tentang />
       <Galeri />
 
       <div className="sertifikasi-container">

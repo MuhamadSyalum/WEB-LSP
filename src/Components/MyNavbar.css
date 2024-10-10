@@ -1,0 +1,48 @@
+/* Mengatur padding navbar agar nol, membuat container berada di atas */
+.navbar-custom {
+    background-color: transparent; /* Tetap transparan */
+    box-shadow: none; /* Menghapus bayangan */
+    padding: 0; /* Padding nol agar posisi lebih rapat ke atas */
+    margin: 0; /* Hapus margin jika ada */
+  }
+  
+  /* Mengatur container agar berada di bagian paling atas */
+  .navbar-custom .container {
+    padding: 0; /* Hapus padding dari Container */
+    margin: 0; /* Hapus margin agar benar-benar di atas */
+  }
+  
+  /* Mengatur logo agar tetap proporsional */
+  .navbar-logo {
+    width: 120px; /* Sesuaikan ukuran logo */
+    margin: 0; /* Hapus margin tambahan jika ada */
+  }
+  
+  /* Mengatur jarak antara nav-link */
+  .navbar-nav .nav-link {
+    font-size: 18px;
+    color: #000;
+    margin-right: 20px;
+  }
+  
+  /* Hover effect untuk nav-link */
+  .navbar-nav .nav-link:hover {
+    color: #04f192;
+    transition: color 0.3s ease;
+  }
+  
+  /* Mengatur posisi tombol login */
+  .login-button {
+    margin-left: auto; /* Membuat tombol login di pojok kanan */
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  
+  .login-button:hover {
+    background-color: #0056b3;
+    color: white;
+  }
+  
