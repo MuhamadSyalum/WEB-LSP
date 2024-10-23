@@ -1,65 +1,44 @@
+// Home.js
 import React from 'react';
 import { motion } from 'framer-motion';
-import Beranda from '../../Components/Beranda';
-import Tentang from '../../Components/Tentang';
-import Galeri from '../../Components/Galeri';
-
+import MyNavbar from '../../components/MyNavbar'; // Pastikan path ini benar
+import Beranda from '../../components/Beranda';
+import Tentang from '../../components/Tentang';
+import Galeri from '../../components/Galeri';
 
 const Home = () => {
   return (
-    <div>
-      {/* Memanggil komponen Beranda dan Galeri */}
-      <Beranda />
-      <Tentang />
-      <Galeri />
+    <>
+      {/* Memanggil Navbar */}
+      <MyNavbar />
 
-      <div className="sertifikasi-container">
-        <h1 className="title">Program Sertifikasi</h1>
-        <div className="sertifikasi-grid">
-          <motion.div
-            className="card"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            initial={{ y: -100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              type: 'spring',
-              stiffness: 260,
-              damping: 20,
-              bounce: 0.4,
-              duration: 0.5,
-            }}
-          >
-            <h2>Administrasi Kantor</h2>
-            <p>Pelajari keterampilan administrasi yang dibutuhkan di kantor modern.</p>
-          </motion.div>
+      {/* Konten Halaman Home */}
+      <div className="container mt-3">
+        <motion.div>
+          <Beranda />
+          <Tentang />
+          <Galeri />
 
-          <motion.div
-            className="card"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              type: 'spring',
-              stiffness: 260,
-              damping: 20,
-              bounce: 0.4,
-              duration: 0.5,
-            }}
-          >
-            <h2>Sekretaris Junior</h2>
-            <p>Dapatkan keterampilan dasar yang diperlukan untuk menjadi sekretaris junior.</p>
-          </motion.div>
-        </div>
+          <section>
+            <h2>Program Sertifikasi</h2>
+            <div>
+              <h3>Administrasi Kantor</h3>
+              <p>Pelajari keterampilan administrasi yang dibutuhkan di kantor modern.</p>
+            </div>
+            <div>
+              <h3>Sekretaris Junior</h3>
+              <p>Dapatkan keterampilan dasar yang diperlukan untuk menjadi sekretaris junior.</p>
+            </div>
+          </section>
+
+          <section>
+            <h2>Kontak Kami</h2>
+            <p>Hubungi kami di sini.</p>
+          </section>
+        </motion.div>
       </div>
-
-      <section id="kontak" className="container mt-5">
-        <h1>Kontak Kami</h1>
-        <p>Hubungi kami di sini.</p>
-      </section>
-    </div>
+    </>
   );
-}
+};
 
 export default Home;

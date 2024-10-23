@@ -1,49 +1,275 @@
+// auth.js
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2');
+const cors = require('cors');
 
-// Buat koneksi ke database MySQL
+// Middleware
+router.use(cors());
+router.use(express.json());
+
+// Database connection
 const db = mysql.createConnection({
-  host: 'localhost', // ganti dengan host database Anda
-  user: 'root',      // ganti dengan user database Anda
-  password: '',      // ganti dengan password database Anda
-  database: 'web-lsp', // ganti dengan nama database Anda
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'web-lsp'
 });
 
-// Connect ke database
+// Test database connection
 db.connect((err) => {
   if (err) {
-    console.error('Error connecting to MySQL:', err);
+    console.error('Database connection failed:', err);
   } else {
-    console.log('Connected to MySQL');
+    console.log('Database connected successfully');
   }
 });
 
-// Endpoint untuk login
-router.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  console.log('Email:', email); // Log email
-  console.log('Password:', password); // Log password
+// Middleware untuk validasi admin
+const validateAdmin = (req, res, next) => {
+  const userLevel = req.headers['user-level'];
+  if (userLevel !== '1') {
+    return res.status(403).json({ success: false, message: 'Access denied' });
+  }
+  next();
+};
 
-  // Query untuk mengecek apakah pengguna ada di database
-  const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-  db.query(query, [email, password], (err, results) => {
+// Login endpoint
+router.post('/login', (req, res) => {
+  console.log('Login request received:', req.body);
+  
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    console.log('Missing email or password');
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Email and password are required' 
+    });
+  }
+
+  const query = 'SELECT * FROM users WHERE email = ?';
+  
+  db.query(query, [email], (err, results) => {
     if (err) {
-      console.error('Error during query:', err);
-      res.status(500).json({ message: 'Server error' });
-    } else if (results.length > 0) {
-      // Jika pengguna ditemukan, kirim data termasuk level
-      const user = results[0];
-      res.json({
-        success: true,
-        message: 'Login successful',
-        level: user.level, // Kirim level pengguna ke frontend
+      console.error('Database error:', err);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Server error' 
       });
-    } else {
-      // Jika pengguna tidak ditemukan
-      res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
+
+    console.log('Query results:', results);
+
+    if (results.length === 0) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Invalid email or password' 
+      });
+    }
+
+    const user = results[0];
+
+    // Check password
+    if (user.password !== password) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Invalid email or password' 
+      });
+    }
+
+    // Generate session token (in production, use JWT)
+    const token = Date.now().toString();
+
+    res.json({
+      success: true,
+      message: 'Login successful',
+      user: {
+        id: user.id,
+        email: user.email,
+        level: user.level
+      },
+      token: token
+    });
   });
 });
 
-module.exports = router; // Pastikan router diekspor
+// Register endpoint
+router.post('/register', validateAdmin, (req, res) => {
+  const { email, password, level } = req.body;
+
+  if (!email || !password || !level) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'All fields are required' 
+    });
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Invalid email format' 
+    });
+  }
+
+  const query = `
+    INSERT INTO users (email, password, level, created_at, updated_at) 
+    VALUES (?, ?, ?, NOW(), NOW())
+  `;
+
+  db.query(query, [email, password, level], (err, results) => {
+    if (err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Email already exists' 
+        });
+      }
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Server error' 
+      });
+    }
+    
+    res.json({
+      success: true,
+      message: 'User registered successfully',
+      userId: results.insertId
+    });
+  });
+});
+
+// Update user endpoint
+router.put('/users/:id', validateAdmin, (req, res) => {
+  const { id } = req.params;
+  const { email, password, level } = req.body;
+
+  let query;
+  let params;
+
+  if (password) {
+    query = `
+      UPDATE users 
+      SET email = ?, password = ?, level = ?, updated_at = NOW() 
+      WHERE id = ?
+    `;
+    params = [email, password, level, id];
+  } else {
+    query = `
+      UPDATE users 
+      SET email = ?, level = ?, updated_at = NOW() 
+      WHERE id = ?
+    `;
+    params = [email, level, id];
+  }
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Email already exists' 
+        });
+      }
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Server error' 
+      });
+    }
+    
+    res.json({
+      success: true,
+      message: 'User updated successfully'
+    });
+  });
+});
+
+// Get users endpoints
+router.get('/asesor', validateAdmin, (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  const query = `
+    SELECT id, email, level, created_at, updated_at 
+    FROM users 
+    WHERE level = 2 
+    ORDER BY created_at DESC 
+    LIMIT ? OFFSET ?
+  `;
+
+  db.query(query, [limit, offset], (err, results) => {
+    if (err) {
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Server error' 
+      });
+    }
+
+    db.query('SELECT COUNT(*) as total FROM users WHERE level = 2', (err, countResult) => {
+      if (err) {
+        return res.status(500).json({ 
+          success: false, 
+          message: 'Server error' 
+        });
+      }
+
+      res.json({
+        success: true,
+        data: results,
+        pagination: {
+          page,
+          limit,
+          total: countResult[0].total,
+          totalPages: Math.ceil(countResult[0].total / limit)
+        }
+      });
+    });
+  });
+});
+
+// Delete user endpoint
+router.delete('/users/:id', validateAdmin, (req, res) => {
+  const { id } = req.params;
+
+  db.query('SELECT level FROM users WHERE id = ?', [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Server error' 
+      });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'User not found' 
+      });
+    }
+
+    if (results[0].level === 1) {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'Cannot delete admin users' 
+      });
+    }
+
+    const query = 'DELETE FROM users WHERE id = ?';
+    db.query(query, [id], (err) => {
+      if (err) {
+        return res.status(500).json({ 
+          success: false, 
+          message: 'Server error' 
+        });
+      }
+      
+      res.json({
+        success: true,
+        message: 'User deleted successfully'
+      });
+    });
+  });
+});
+
+module.exports = router;
