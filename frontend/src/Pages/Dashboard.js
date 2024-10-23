@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './Dashboard.css';  
+
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -168,51 +170,48 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="row mt-4">
-        <div className="col-12">
-          <div className="card">
-            <div className="card-header">
-              <h5 className="mb-0">Recent Activities</h5>
-            </div>
-            <div className="card-body">
-              {stats.recentActivities.length > 0 ? (
-                <div className="table-responsive">
-                  <table className="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>Email</th>
-                        <th>Type</th>
-                        <th>Created At</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {stats.recentActivities.map((activity, index) => (
-                        <tr key={activity.id || index}>
-                          <td>{activity.email}</td>
-                          <td>
-                            <span className={`badge ${activity.level === 2 ? 'bg-primary' : 'bg-success'}`}>
-                              {activity.level === 2 ? 'Asesor' : 'Asesi'}
-                            </span>
-                          </td>
-                          <td>
-                            {new Date(activity.created_at).toLocaleDateString('id-ID', {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric'
-                            })}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <p className="text-center mb-0">No recent activities</p>
-              )}
-            </div>
-          </div>
-        </div>
+      <div className="card recent-activities">
+  <div className="card-header">
+    <h5 className="mb-0">Recent Activities</h5>
+  </div>
+  <div className="card-body">
+    {stats.recentActivities.length > 0 ? (
+      <div className="table-responsive">
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Type</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stats.recentActivities.map((activity, index) => (
+              <tr key={activity.id || index}>
+                <td>{activity.email}</td>
+                <td>
+                  <span className={`badge ${activity.level === 2 ? 'bg-primary' : 'bg-success'}`}>
+                    {activity.level === 2 ? 'Asesor' : 'Asesi'}
+                  </span>
+                </td>
+                <td>
+                  {new Date(activity.created_at).toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+    ) : (
+      <p className="text-center mb-0">No recent activities</p>
+    )}
+  </div>
+</div>
+
     </div>
   );
 };

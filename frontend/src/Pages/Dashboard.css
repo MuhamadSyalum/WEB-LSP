@@ -1,0 +1,162 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    margin-top: 20px;
+  }
+  
+  /* Loading Spinner Animation */
+  .spinner-border {
+    width: 4rem;
+    height: 4rem;
+    border-width: 0.5rem;
+    animation: spinner-grow 1.5s linear infinite;
+  }
+  
+  @keyframes spinner-grow {
+    0% {
+      transform: scale(0.5);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Card Styles */
+  .card {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+  /* Enlarged Recent Activities Card */
+.card.recent-activities {
+    padding: 2rem; /* Increase the padding for a larger card */
+    margin-top: 2rem; /* Add more space from the top */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow for more prominence */
+    border-radius: 1rem; /* Increase border-radius for a smoother, rounder look */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card.recent-activities:hover {
+    transform: translateY(-10px); /* Slight elevation on hover */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+  }
+  
+  .card.recent-activities .card-header {
+    font-size: 1.5rem; /* Larger font for the header */
+    font-weight: 700;
+    padding-bottom: 1rem;
+  }
+  
+  .card.recent-activities .card-body {
+    padding: 1.5rem;
+  }
+  
+  /* Recent Activities Table */
+  .card.recent-activities .table {
+    margin-bottom: 0; /* Remove extra margin below the table */
+  }
+  
+  .card.recent-activities .table-hover tbody tr:hover {
+    background-color: rgba(40, 167, 69, 0.1); /* Soft green hover effect */
+  }
+  
+  /* Dashboard Numbers */
+  .display-4 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0;
+  }
+  
+  .bg-primary, .bg-success {
+    background-size: 300% 100%;
+    animation: gradient-slide 6s ease infinite;
+  }
+  
+  @keyframes gradient-slide {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .bg-primary {
+    background-image: linear-gradient(45deg, #007bff, #6610f2, #17a2b8);
+  }
+  
+  .bg-success {
+    background-image: linear-gradient(45deg, #28a745, #20c997, #00a65a);
+  }
+  
+  /* Recent Activities Table */
+  .table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+  
+  .badge {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  
+  /* Error and No Data Alerts */
+  .alert {
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Media Queries for Responsive Design */
+  @media (max-width: 768px) {
+    .display-4 {
+      font-size: 2.5rem;
+    }
+  
+    .card-body {
+      padding: 1.5rem;
+    }
+  }
+  
