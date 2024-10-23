@@ -228,7 +228,129 @@ router.get('/asesor', validateAdmin, (req, res) => {
     });
   });
 });
+// Get asesi endpoint
+router.get('/users/asesi', validateAdmin, (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
 
+  const query = `
+    SELECT id, email, level, created_at, updated_at 
+    FROM users 
+    WHERE level = 3 
+    ORDER BY created_at DESC 
+    LIMIT ? OFFSET ?
+  `;
+
+  db.query(query, [limit, offset], (err, results) => {
+    if (err) {
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Server error' 
+      });
+    }
+
+    db.query('SELECT COUNT(*) as total FROM users WHERE level = 3', (err, countResult) => {
+      if (err) {
+        return res.status(500).json({ 
+          success: false, 
+          message: 'Server error' 
+        });
+      }
+
+      res.json({
+        success: true,
+        data: results,
+        pagination: {
+          page,
+          limit,
+          total: countResult[0].total,
+          totalPages: Math.ceil(countResult[0].total / limit)
+        }
+      });
+    });
+  });
+});
+// Get total asesi count
+router.get('/asesi-count', validateAdmin, (req, res) => {
+  const query = 'SELECT COUNT(*) as total FROM users WHERE level = 3';
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Server error' 
+      });
+    }
+    
+    res.json({
+      success: true,
+      total: results[0].total
+    });
+  });
+});
+// Dashboard endpoint
+router.get('/dashboard', validateAdmin, async (req, res) => {
+  console.log('Dashboard endpoint hit');
+  
+  try {
+    // Promises untuk menjalankan queries secara parallel
+    const [asesorCount, asesiCount, recentActivities] = await Promise.all([
+      // Get total Asesor (level 2)
+      new Promise((resolve, reject) => {
+        db.query('SELECT COUNT(*) as total FROM users WHERE level = 2', (err, result) => {
+          if (err) reject(err);
+          else resolve(result[0].total);
+        });
+      }),
+      
+      // Get total Asesi (level 3)
+      new Promise((resolve, reject) => {
+        db.query('SELECT COUNT(*) as total FROM users WHERE level = 3', (err, result) => {
+          if (err) reject(err);
+          else resolve(result[0].total);
+        });
+      }),
+      
+      // Get recent activities
+      new Promise((resolve, reject) => {
+        db.query(
+          `SELECT id, email, level, created_at 
+           FROM users 
+           WHERE level IN (2, 3) 
+           ORDER BY created_at DESC 
+           LIMIT 5`,
+          (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+          }
+        );
+      })
+    ]);
+
+    console.log('Dashboard data:', {
+      asesorCount,
+      asesiCount,
+      recentActivitiesCount: recentActivities.length
+    });
+
+    res.json({
+      success: true,
+      stats: {
+        totalAsesor: asesorCount,
+        totalAsesi: asesiCount,
+        recentActivities: recentActivities
+      }
+    });
+
+  } catch (error) {
+    console.error('Dashboard error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error: ' + error.message
+    });
+  }
+});
 // Delete user endpoint
 router.delete('/users/:id', validateAdmin, (req, res) => {
   const { id } = req.params;

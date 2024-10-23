@@ -10,52 +10,97 @@ const ManageAsesi = () => {
   });
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 0
+  });
+  const [error, setError] = useState('');
 
+  // Configure axios defaults
+  axios.defaults.headers.common['user-level'] = '1'; // Admin level
+  
   useEffect(() => {
     fetchAsesi();
-  }, []);
+  }, [pagination.page]);
 
   const fetchAsesi = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/asesi');
-      setAsesiList(response.data);
+      const response = await axios.get(`http://localhost:5000/api/auth/users/asesi`, {
+        params: {
+          page: pagination.page,
+          limit: pagination.limit
+        }
+      });
+      
+      if (response.data.success) {
+        setAsesiList(response.data.data);
+        setPagination(prev => ({
+          ...prev,
+          total: response.data.pagination.total,
+          totalPages: response.data.pagination.totalPages
+        }));
+      } else {
+        setError('Failed to fetch asesi data');
+      }
     } catch (error) {
       console.error('Error fetching asesi:', error);
+      setError('Error fetching asesi data');
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:5000/api/auth/users/${editId}`, formData);
+        const response = await axios.put(`http://localhost:5000/api/auth/users/${editId}`, formData);
+        if (response.data.success) {
+          fetchAsesi();
+          resetForm();
+        } else {
+          setError(response.data.message);
+        }
       } else {
-        await axios.post('http://localhost:5000/api/auth/register', formData);
+        const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+        if (response.data.success) {
+          fetchAsesi();
+          resetForm();
+        } else {
+          setError(response.data.message);
+        }
       }
-      fetchAsesi();
-      resetForm();
     } catch (error) {
       console.error('Error:', error);
+      setError(error.response?.data?.message || 'An error occurred');
     }
   };
 
   const handleEdit = (asesi) => {
     setFormData({
       email: asesi.email,
-      password: '',
+      password: '', // Password field is empty when editing
       level: 3
     });
     setIsEditing(true);
     setEditId(asesi.id);
+    setError('');
   };
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this asesi?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/auth/users/${id}`);
-        fetchAsesi();
+        const response = await axios.delete(`http://localhost:5000/api/auth/users/${id}`);
+        if (response.data.success) {
+          fetchAsesi();
+        } else {
+          setError(response.data.message);
+        }
       } catch (error) {
         console.error('Error deleting asesi:', error);
+        setError(error.response?.data?.message || 'Error deleting asesi');
       }
     }
   };
@@ -68,11 +113,18 @@ const ManageAsesi = () => {
     });
     setIsEditing(false);
     setEditId(null);
+    setError('');
   };
 
   return (
     <div className="container mt-4">
       <h2>Manage Asesi</h2>
+      
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
       
       <form onSubmit={handleSubmit} className="mb-4">
         <div className="mb-3">
@@ -94,6 +146,9 @@ const ManageAsesi = () => {
             onChange={(e) => setFormData({...formData, password: e.target.value})}
             required={!isEditing}
           />
+          {isEditing && (
+            <small className="text-muted">Leave blank to keep current password</small>
+          )}
         </div>
         <button type="submit" className="btn btn-primary">
           {isEditing ? 'Update' : 'Add'} Asesi
@@ -110,6 +165,7 @@ const ManageAsesi = () => {
           <tr>
             <th>ID</th>
             <th>Email</th>
+            <th>Created At</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -118,6 +174,7 @@ const ManageAsesi = () => {
             <tr key={asesi.id}>
               <td>{asesi.id}</td>
               <td>{asesi.email}</td>
+              <td>{new Date(asesi.created_at).toLocaleDateString()}</td>
               <td>
                 <button
                   className="btn btn-sm btn-warning me-2"
@@ -136,6 +193,25 @@ const ManageAsesi = () => {
           ))}
         </tbody>
       </table>
+
+      {/* Pagination */}
+      <nav>
+        <ul className="pagination">
+          {[...Array(pagination.totalPages)].map((_, index) => (
+            <li 
+              key={index} 
+              className={`page-item ${pagination.page === index + 1 ? 'active' : ''}`}
+            >
+              <button
+                className="page-link"
+                onClick={() => setPagination(prev => ({ ...prev, page: index + 1 }))}
+              >
+                {index + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 };

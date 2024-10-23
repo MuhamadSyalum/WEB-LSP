@@ -1,19 +1,16 @@
 import React, { useEffect } from 'react';
-import { useNavigate, Routes, Route } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-import Dashboard from './Dashboard';
-import ManageAsesor from './ManageAsesor';
-import ManageAsesi from './ManageAsesi';
 
 const AdminPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     // Cek jika user terautentikasi dan memiliki level admin
-    const user = JSON.parse(localStorage.getItem('user')); // Ambil user dari localStorage
-    const level = user ? user.level : null; // Ambil level dari user
+    const user = JSON.parse(localStorage.getItem('user'));
+    const level = user ? user.level : null;
 
-    if (!level || level !== 1) { // Pastikan level adalah angka dan bukan string
+    if (!level || level !== 1) {
       navigate('/login');
     }
   }, [navigate]);
@@ -22,11 +19,7 @@ const AdminPage = () => {
     <div style={{ display: 'flex' }}>
       <Sidebar />
       <div className="content" style={{ flex: 1, marginLeft: '250px', padding: '20px' }}>
-        <Routes>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="Asesor" element={<ManageAsesor />} />
-          <Route path="Asesi" element={<ManageAsesi />} />
-        </Routes>
+        <Outlet />
       </div>
     </div>
   );
