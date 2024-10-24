@@ -1,5 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
@@ -12,6 +10,17 @@ import ManageAsesor from './Pages/ManageAsesor';
 import ManageAsesi from './Pages/ManageAsesi';
 import Dashboard from './Pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import ProfileForm from './components/ProfileForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+
+// Placeholder components
+const PanduanAsesmen = () => <h1>Panduan Asesmen</h1>;
+const KelengkapanDokumen = () => <h1>Kelengkapan Dokumen</h1>;
+const SoalEssay = () => <h1>Soal Essay</h1>;
+const SoalPilihanGanda = () => <h1>Soal Pilihan Ganda</h1>;
+const SoalDemonstrasi = () => <h1>Soal Demonstrasi</h1>;
+const Wawancara = () => <h1>Wawancara</h1>;
 
 function App() {
   return (
@@ -40,12 +49,23 @@ function App() {
             </ProtectedRoute>
           } />
           
-          {/* Asesi Route */}
+          {/* Asesi Routes */}
           <Route path="/asesi" element={
             <ProtectedRoute allowedLevels={[3]}>
               <AsesiPage />
             </ProtectedRoute>
-          } />
+          }>
+            <Route index element={<Navigate to="dashboard" />} />
+            <Route path="dashboard" element={ <Dashboard /> } />
+            <Route path="profile" element={ <ProfileForm /> } />
+            <Route path="panduan" element={ <PanduanAsesmen /> } />
+            <Route path="dokumen" element={ <KelengkapanDokumen /> } />
+            <Route path="asesmen" element={ <Navigate to="asesmen/essay" /> } />
+            <Route path="asesmen/essay" element={ <SoalEssay /> } />
+            <Route path="asesmen/pilihan" element={ <SoalPilihanGanda /> } />
+            <Route path="asesmen/demo" element={ <SoalDemonstrasi /> } />
+            <Route path="asesmen/wawancara" element={ <Wawancara /> } />
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

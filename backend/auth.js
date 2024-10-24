@@ -228,6 +228,7 @@ router.get('/asesor', validateAdmin, (req, res) => {
     });
   });
 });
+
 // Get asesi endpoint
 router.get('/users/asesi', validateAdmin, (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -266,11 +267,12 @@ router.get('/users/asesi', validateAdmin, (req, res) => {
           limit,
           total: countResult[0].total,
           totalPages: Math.ceil(countResult[0].total / limit)
-        }
+         }
       });
     });
   });
 });
+
 // Get total asesi count
 router.get('/asesi-count', validateAdmin, (req, res) => {
   const query = 'SELECT COUNT(*) as total FROM users WHERE level = 3';
@@ -289,6 +291,7 @@ router.get('/asesi-count', validateAdmin, (req, res) => {
     });
   });
 });
+
 // Dashboard endpoint
 router.get('/dashboard', validateAdmin, async (req, res) => {
   console.log('Dashboard endpoint hit');
@@ -351,6 +354,7 @@ router.get('/dashboard', validateAdmin, async (req, res) => {
     });
   }
 });
+
 // Delete user endpoint
 router.delete('/users/:id', validateAdmin, (req, res) => {
   const { id } = req.params;
@@ -366,7 +370,7 @@ router.delete('/users/:id', validateAdmin, (req, res) => {
     if (results.length === 0) {
       return res.status(404).json({ 
         success: false, 
-        message: 'User not found' 
+        message: 'User  not found' 
       });
     }
 
@@ -388,8 +392,81 @@ router.delete('/users/:id', validateAdmin, (req, res) => {
       
       res.json({
         success: true,
-        message: 'User deleted successfully'
+        message: 'User  deleted successfully'
       });
+    });
+  });
+});
+// Endpoint untuk menyimpan profil asesi
+router.post('/profile_asesi', (req, res) => {
+  const { 
+    userId,
+    nama,
+    email,
+    noKTP,
+    tempatLahir,
+    tanggalLahir,
+    jenisKelamin,
+    alamat,
+    noTelepon,
+    pendidikanTerakhir,
+    pekerjaan,
+    namaPerusahaan
+  } = req.body;
+
+  // Validasi data
+  if (!userId || !nama || !email || !noKTP) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Data tidak lengkap' 
+    });
+  }
+
+  const query = `
+    INSERT INTO profile_asesi 
+    (user_id, nama, email, no_ktp, tempat_lahir, tanggal_lahir, jenis_kelamin, alamat, no_telepon, pendidikan_terakhir, pekerjaan, nama_perusahaan, created_at, updated_at) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+    ON DUPLICATE KEY UPDATE
+    nama = VALUES(nama), 
+    email = VALUES(email), 
+    no_ktp = VALUES(no_ktp), 
+    tempat_lahir = VALUES(tempat_lahir), 
+    tanggal_lahir = VALUES(tanggal_lahir), 
+    jenis_kelamin = VALUES(jenis_kelamin), 
+    alamat = VALUES(alamat), 
+    no_telepon = VALUES(no_telepon), 
+    pendidikan_terakhir = VALUES(pendidikan_terakhir), 
+    pekerjaan = VALUES(pekerjaan), 
+    nama_perusahaan = VALUES(nama_perusahaan), 
+    updated_at = NOW()
+  `;
+
+  db.query(query, [
+    userId,
+    nama,
+    email,
+    noKTP,
+    tempatLahir,
+    tanggalLahir,
+    jenisKelamin,
+    alamat,
+    noTelepon,
+    pendidikanTerakhir,
+    pekerjaan,
+    namaPerusahaan
+  ], (err, result) => {
+    if (err) {
+      console.error('Error saving asesi profile:', err);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Gagal menyimpan profil asesi' 
+      });
+    }
+    
+    res.json({
+      success: true,
+      message: 'Profil asesi berhasil disimpan',
+      profileId: result.insertId
     });
   });
 });

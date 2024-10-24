@@ -1,0 +1,113 @@
+/********** Styles for AsesorPage **********/
+.asesor-page {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .sidebar-container {
+    position: fixed;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #343a40;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .sidebar-container.open {
+    left: 0;
+  }
+  
+  .sidebar {
+    padding: 20px;
+    color: #fff;
+    height: 100%;
+    position: relative;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 60px;
+  }
+  
+  .sidebar ul li {
+    padding: 15px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #495057;
+  }
+  
+  .sidebar ul li:hover {
+    background-color: #495057;
+  }
+  
+  .sidebar ul .dropdown {
+    list-style-type: none;
+    padding-left: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  .sidebar ul .dropdown.open {
+    max-height: 150px;
+  }
+  
+  .content {
+    margin-left: 0;
+    padding: 20px;
+    width: 100%;
+    transition: margin-left 0.3s ease;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+  }
+  
+  .content.sidebar-open {
+    margin-left: 250px;
+  }
+  
+  .header-asesor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .header-asesor h1 {
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .header-asesor .logo img {
+    height: 40px;
+  }
+  
+  .toggle-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      margin-left: 0;
+    }
+  
+    .sidebar-container {
+      left: -250px;
+    }
+  
+    .header-asesor h1 {
+      font-size: 16px;
+    }
+  }
+  
