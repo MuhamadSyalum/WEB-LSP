@@ -1,44 +1,50 @@
-// Home.js
 import React from 'react';
 import { motion } from 'framer-motion';
-import MyNavbar from '../../components/MyNavbar'; // Pastikan path ini benar
-import Beranda from '../../components/Beranda';
-import Tentang from '../../components/Tentang';
-import Galeri from '../../components/Galeri';
+import Beranda from '../../Components/Beranda';
+import Tentang from '../../Components/Tentang';
+import Galeri from '../../Components/Galeri';
 
 const Home = () => {
   return (
-    <>
-      {/* Memanggil Navbar */}
-      <MyNavbar />
+    <div>
+      {/* Memanggil komponen Beranda dan Galeri */}
+      <Beranda />
+      <Tentang />
+      <Galeri />
 
-      {/* Konten Halaman Home */}
-      <div className="container mt-3">
-        <motion.div>
-          <Beranda />
-          <Tentang />
-          <Galeri />
+      <div className="sertifikasi-container">
+        <h1 className="title">Program Sertifikasi</h1>
+        <div className="sertifikasi-grid">
+          <div className="card">
+            <h2>Administrasi Kantor</h2>
+            <p>Dapatkan sertifikasi keterampilan administrasi kantor yang dibutuhkan di kantor modern</p>
+            <motion.button
+              whileHover={{ scale: 1.1 }} // Animasi saat tombol di-hover
+              whileTap={{ scale: 0.9 }} // Animasi saat tombol di-klik
+            >
+              Selanjutnya
+            </motion.button>
+          </div>
 
-          <section>
-            <h2>Program Sertifikasi</h2>
-            <div>
-              <h3>Administrasi Kantor</h3>
-              <p>Pelajari keterampilan administrasi yang dibutuhkan di kantor modern.</p>
-            </div>
-            <div>
-              <h3>Sekretaris Junior</h3>
-              <p>Dapatkan keterampilan dasar yang diperlukan untuk menjadi sekretaris junior.</p>
-            </div>
-          </section>
-
-          <section>
-            <h2>Kontak Kami</h2>
-            <p>Hubungi kami di sini.</p>
-          </section>
-        </motion.div>
+          <div className="card">
+            <h2>Sekretaris Junior</h2>
+            <p>Dapatkan sertifikasi sekretaris junior dan tingkatkan karirmu!</p>
+            <motion.button
+              whileHover={{ scale: 1.1 }} // Animasi saat tombol di-hover
+              whileTap={{ scale: 0.9 }} // Animasi saat tombol di-klik
+            >
+              Selanjutnya
+            </motion.button>
+          </div>
+        </div>
       </div>
-    </>
+
+      <section id="kontak" className="container mt-5">
+        <h1>Kontak Kami</h1>
+        <p>Feel free to contact & reach us</p>
+      </section>
+    </div>
   );
-};
+}
 
 export default Home;
