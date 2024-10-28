@@ -1,30 +1,30 @@
-
+/* src/components/Sertifikasi.css */
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 html {
-    scroll-behavior: smooth;
-  }
-  
+  scroll-behavior: smooth;
+}
+
 body {
-    font-family: "Playfair Display", serif;
+  font-family: "Playfair Display", serif;
 }
 
 .bg-blue {
-    background: #04f192;
+  background: #04f192;
 }
 
-  section {
-    padding: 50px 0; /* Memberikan padding vertikal pada setiap section */
-  }
-/* src/components/Sertifikasi.css */
+section {
+  padding: 50px 0; /* Memberikan padding vertikal pada setiap section */
+}
+
 .sertifikasi-container {
-  padding: 50px 20px;
+  padding: 100px 20px;
   text-align: center;
-  min-height: 100vh; /* Full page height */
+  min-height: 120vh; /* Full page height */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,8 +32,8 @@ body {
 }
 
 .title {
-  font-size: 2.5rem;
-  color: #333; /* Warna teks gelap */
+  font-size: 3rem;
+  color: #ffffff; /* Warna teks gelap */
   margin-bottom: 20px;
 }
 
@@ -45,28 +45,43 @@ body {
 }
 
 .card {
-  background-color: #007bff; /* Warna biru hanya pada card */
+  background-color: #08012e; /* Warna biru hanya pada card */
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 300px;
+  height: 300px;
+  width: 400px;
   color: white; /* Teks warna putih di atas card biru */
-  transition: transform 0.3s ease;
 }
 
 .card h2 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  font-size: 2.3rem;
+  margin-bottom: 25px;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .card p {
   font-size: 1rem;
+  margin-top: 15px;
+  color: #b2b2b2;
 }
 
+/* Tombol Selanjutnya */
+.card button {
+  margin-top: 40px;
+  margin-bottom: 10px;
+  background-color: #eb8317;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Responsif */
 @media (max-width: 768px) {
   .card {
     width: 90%; /* Pastikan card responsif di layar kecil */
   }
 }
-
-
