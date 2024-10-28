@@ -6,7 +6,8 @@ const ManageAsesi = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    level: 3 // Level untuk Asesi
+    level: 3,
+    username: ''
   });
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -19,7 +20,7 @@ const ManageAsesi = () => {
   const [error, setError] = useState('');
 
   // Configure axios defaults
-  axios.defaults.headers.common['user-level'] = '1'; // Admin level
+  axios.defaults.headers.common['user-level'] = '1'; 
   
   useEffect(() => {
     fetchAsesi();
@@ -54,9 +55,25 @@ const ManageAsesi = () => {
     e.preventDefault();
     setError('');
     
+    // Validasi input
+    if (!formData.email || !formData.username || (!isEditing && !formData.password)) {
+      setError('Please fill in all required fields');
+      return;
+    }
+
     try {
       if (isEditing) {
-        const response = await axios.put(`http://localhost:5000/api/auth/users/${editId}`, formData);
+        // Untuk update, hanya kirim password jika diisi
+        const updateData = {
+          ...formData,
+          password: formData.password.trim() === '' ? undefined : formData.password
+        };
+        
+        const response = await axios.put(
+          `http://localhost:5000/api/auth/users/${editId}`, 
+          updateData
+        );
+        
         if (response.data.success) {
           fetchAsesi();
           resetForm();
@@ -64,7 +81,11 @@ const ManageAsesi = () => {
           setError(response.data.message);
         }
       } else {
-        const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+        const response = await axios.post(
+          'http://localhost:5000/api/auth/register', 
+          formData
+        );
+        
         if (response.data.success) {
           fetchAsesi();
           resetForm();
@@ -81,8 +102,9 @@ const ManageAsesi = () => {
   const handleEdit = (asesi) => {
     setFormData({
       email: asesi.email,
-      password: '', // Password field is empty when editing
-      level: 3
+      password: '', // Password kosong untuk edit
+      level: 3,
+      username: asesi.username // Tambahkan username
     });
     setIsEditing(true);
     setEditId(asesi.id);
@@ -109,7 +131,8 @@ const ManageAsesi = () => {
     setFormData({
       email: '',
       password: '',
-      level: 3
+      level: 3,
+      username: ''
     });
     setIsEditing(false);
     setEditId(null);
@@ -118,7 +141,7 @@ const ManageAsesi = () => {
 
   return (
     <div className="container mt-4">
-      <h2>Manage Asesi</h2>
+      <h2>{isEditing ? 'Edit Asesi' : 'Add New Asesi'}</h2>
       
       {error && (
         <div className="alert alert-danger" role="alert">
@@ -137,8 +160,22 @@ const ManageAsesi = () => {
             required
           />
         </div>
+        
         <div className="mb-3">
-          <label className="form-label">Password:</label>
+          <label className="form-label">Username:</label>
+          <input
+            type="text"
+            className="form-control"
+            value={formData.username}
+            onChange={(e) => setFormData({...formData, username: e.target.value})}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">
+            Password: {isEditing && <span className="text-muted">(Leave blank to keep current password)</span>}
+          </label>
           <input
             type="password"
             className="form-control"
@@ -146,15 +183,17 @@ const ManageAsesi = () => {
             onChange={(e) => setFormData({...formData, password: e.target.value})}
             required={!isEditing}
           />
-          {isEditing && (
-            <small className="text-muted">Leave blank to keep current password</small>
-          )}
         </div>
+
         <button type="submit" className="btn btn-primary">
           {isEditing ? 'Update' : 'Add'} Asesi
         </button>
         {isEditing && (
-          <button type="button" className="btn btn-secondary ms-2" onClick={resetForm}>
+          <button 
+            type="button" 
+            className="btn btn-secondary ms-2" 
+            onClick={resetForm}
+          >
             Cancel
           </button>
         )}
@@ -165,6 +204,7 @@ const ManageAsesi = () => {
           <tr>
             <th>ID</th>
             <th>Email</th>
+            <th>Username</th>
             <th>Created At</th>
             <th>Actions</th>
           </tr>
@@ -174,6 +214,7 @@ const ManageAsesi = () => {
             <tr key={asesi.id}>
               <td>{asesi.id}</td>
               <td>{asesi.email}</td>
+              <td>{asesi.username}</td>
               <td>{new Date(asesi.created_at).toLocaleDateString()}</td>
               <td>
                 <button
@@ -194,7 +235,6 @@ const ManageAsesi = () => {
         </tbody>
       </table>
 
-      {/* Pagination */}
       <nav>
         <ul className="pagination">
           {[...Array(pagination.totalPages)].map((_, index) => (

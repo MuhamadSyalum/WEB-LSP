@@ -1,112 +1,98 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth'; // Gunakan hook useAuth dari file terpisah
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { auth, setAuth } = useAuth(); // Gunakan auth dan setAuth dari context
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { setAuth } = useAuth();
+  const [error, setError] = useState('');
 
-  const from = location.state?.from?.pathname || "/";
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setErrorMessage('');
+    setError('');
+  
+    console.log('Data yang dikirim:', { email, password });
   
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', 
-        {
-          email,
-          password,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        email,
+        password,
+      });
   
-      console.log('Login response:', response.data); // Debugging
-  
+      console.log('Full response:', response);
+
       if (response.data.success) {
-        const { user, token } = response.data;
-  
-        console.log('User data:', user); // Debugging
-        console.log('Token:', token); // Debugging
-  
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-  
+        console.log('Login successful:', response.data);
+        
+        // Update auth state menggunakan setAuth
         setAuth({
           isAuthenticated: true,
-          user,
-          token
+          user: response.data.user,
+          token: response.data.token,
         });
+
+        // Simpan token dan user di localStorage
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
   
-        const redirectMap = {
-          1: '/admin',
-          2: '/asesor',
-          3: '/asesi'
-        };
-  
-        const redirectPath = redirectMap[user.level] || from;
-        console.log('Redirecting to:', redirectPath); // Debugging
-        navigate(redirectPath);
+        // Arahkan berdasarkan level pengguna
+        switch (response.data.user.level) {
+          case 1:
+            navigate('/admin/dashboard');
+            break;
+          case 2:
+            navigate('/asesor');
+            break;
+          case 3:
+            navigate('/asesi/dashboard');
+            break;
+          default:
+            navigate('/');
+        }
       } else {
-        setErrorMessage(response.data.message || 'Login failed');
+        console.log('Login failed:', response.data);
+        setError(response.data.message || 'Login failed');
       }
     } catch (error) {
-      console.error('Login error:', error);
-      setErrorMessage('An error occurred. Please try again.');
-    } finally {
-      setIsLoading(false);
+      console.error('Login error:', error.response ? error.response.data : error);
+      setError(error.response?.data?.message || 'An error occurred during login.');
     }
   };
-  
 
   return (
-    <Container className="mt-5">
-      <Row className="justify-content-md-center">
-        <Col md={6}>
-          <h2 className="text-center mb-4">Login</h2>
-          {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={isLoading}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={isLoading}
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit" className="w-100" disabled={isLoading}>
-              {isLoading ? 'Logging in...' : 'Login'}
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+    <div className="container mt-4">
+      <h2>Login</h2>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <form onSubmit={handleLogin}>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">Email:</label>
+          <input
+            type="email"
+            id="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password:</label>
+          <input
+            type="password"
+            id="password"
+            className="form-control"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">Login</button>
+      </form>
+    </div>
   );
 };
 

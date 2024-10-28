@@ -10,7 +10,7 @@ import ManageAsesor from './Pages/ManageAsesor';
 import ManageAsesi from './Pages/ManageAsesi';
 import Dashboard from './Pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
-import ProfileForm from './components/ProfileForm';
+import ProfilePage from './Pages/ProfilePage'; // Ubah ini dari ProfileForm ke ProfilePage
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -56,15 +56,15 @@ function App() {
             </ProtectedRoute>
           }>
             <Route index element={<Navigate to="dashboard" />} />
-            <Route path="dashboard" element={ <Dashboard /> } />
-            <Route path="profile" element={ <ProfileForm /> } />
-            <Route path="panduan" element={ <PanduanAsesmen /> } />
-            <Route path="dokumen" element={ <KelengkapanDokumen /> } />
-            <Route path="asesmen" element={ <Navigate to="asesmen/essay" /> } />
-            <Route path="asesmen/essay" element={ <SoalEssay /> } />
-            <Route path="asesmen/pilihan" element={ <SoalPilihanGanda /> } />
-            <Route path="asesmen/demo" element={ <SoalDemonstrasi /> } />
-            <Route path="asesmen/wawancara" element={ <Wawancara /> } />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="profile" element={<ProfilePage />} /> {/* Ubah ini ke ProfilePage */}
+            <Route path="panduan" element={<PanduanAsesmen />} />
+            <Route path="dokumen" element={<KelengkapanDokumen />} />
+            <Route path="asesmen" element={<Navigate to="asesmen/essay" />} />
+            <Route path="asesmen/essay" element={<SoalEssay />} />
+            <Route path="asesmen/pilihan" element={<SoalPilihanGanda />} />
+            <Route path="asesmen/demo" element={<SoalDemonstrasi />} />
+            <Route path="asesmen/wawancara" element={<Wawancara />} />
           </Route>
         </Routes>
       </BrowserRouter>

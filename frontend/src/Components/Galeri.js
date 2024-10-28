@@ -4,18 +4,18 @@ import { motion } from 'framer-motion';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Galeri.css';  
-import image1 from '../assets/images/img1.jpg';
-import image2 from '../assets/images/img2.jpg';
-import image3 from '../assets/images/img3.jpg';
-import image4 from '../assets/images/img4.jpg';
-import image5 from '../assets/images/img5.jpg';
-import image6 from '../assets/images/img6.jpg';
-import image7 from '../assets/images/img7.jpg';
-import image8 from '../assets/images/img8.jpg';
-import image9 from '../assets/images/img9.jpg';
-import image10 from '../assets/images/img10.jpg';
-import image11 from '../assets/images/img11.jpg';
-import image12 from '../assets/images/img12.jpg';
+import image1 from '../assets/images/image1.jpg';
+import image2 from '../assets/images/image2.jpg';
+import image3 from '../assets/images/image3.jpg';
+import image4 from '../assets/images/image4.jpg';
+import image5 from '../assets/images/image5.jpg';
+import image6 from '../assets/images/image6.jpg';
+import image7 from '../assets/images/image7.jpg';
+import image8 from '../assets/images/image8.jpg';
+import image9 from '../assets/images/image9.jpg';
+import image10 from '../assets/images/image10.jpg';
+import image11 from '../assets/images/image11.jpg';
+import image12 from '../assets/images/image12.jpg';
 
 const Galeri = () => {
   // Pengaturan untuk slider react-slick

@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Beranda from '../../Components/Beranda';
-import Tentang from '../../Components/Tentang';
-import Galeri from '../../Components/Galeri';
+import Beranda from '../../components/Beranda';
+import Tentang from '../../components/Tentang';
+import Galeri from '../../components/Galeri';
 
 const Home = () => {
   return (

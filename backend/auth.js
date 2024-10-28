@@ -96,9 +96,10 @@ router.post('/login', (req, res) => {
 
 // Register endpoint
 router.post('/register', validateAdmin, (req, res) => {
-  const { email, password, level } = req.body;
+  const { email, password, level, username } = req.body;
 
-  if (!email || !password || !level) {
+  // Validasi input
+  if (!email || !password || !level || !username) {
     return res.status(400).json({ 
       success: false, 
       message: 'All fields are required' 
@@ -114,12 +115,13 @@ router.post('/register', validateAdmin, (req, res) => {
   }
 
   const query = `
-    INSERT INTO users (email, password, level, created_at, updated_at) 
-    VALUES (?, ?, ?, NOW(), NOW())
+    INSERT INTO users (email, password, level, username, created_at, updated_at) 
+    VALUES (?, ?, ?, ?, NOW(), NOW())
   `;
 
-  db.query(query, [email, password, level], (err, results) => {
+  db.query(query, [email, password, level, username], (err, results) => {
     if (err) {
+      console.error('Registration error:', err);
       if (err.code === 'ER_DUP_ENTRY') {
         return res.status(400).json({ 
           success: false, 
@@ -143,29 +145,31 @@ router.post('/register', validateAdmin, (req, res) => {
 // Update user endpoint
 router.put('/users/:id', validateAdmin, (req, res) => {
   const { id } = req.params;
-  const { email, password, level } = req.body;
+  const { email, password, level, username } = req.body;
 
   let query;
   let params;
 
-  if (password) {
+  // Cek apakah password diubah
+  if (password && password.trim() !== '') {
     query = `
       UPDATE users 
-      SET email = ?, password = ?, level = ?, updated_at = NOW() 
+      SET email = ?, password = ?, level = ?, username = ?, updated_at = NOW() 
       WHERE id = ?
     `;
-    params = [email, password, level, id];
+    params = [email, password, level, username, id];
   } else {
     query = `
       UPDATE users 
-      SET email = ?, level = ?, updated_at = NOW() 
+      SET email = ?, level = ?, username = ?, updated_at = NOW() 
       WHERE id = ?
     `;
-    params = [email, level, id];
+    params = [email, level, username, id];
   }
 
   db.query(query, params, (err, results) => {
     if (err) {
+      console.error('Update error:', err);
       if (err.code === 'ER_DUP_ENTRY') {
         return res.status(400).json({ 
           success: false, 
@@ -178,13 +182,19 @@ router.put('/users/:id', validateAdmin, (req, res) => {
       });
     }
     
+    if (results.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+    
     res.json({
       success: true,
       message: 'User updated successfully'
     });
   });
 });
-
 // Get users endpoints
 router.get('/asesor', validateAdmin, (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -236,7 +246,7 @@ router.get('/users/asesi', validateAdmin, (req, res) => {
   const offset = (page - 1) * limit;
 
   const query = `
-    SELECT id, email, level, created_at, updated_at 
+    SELECT id, email, level, username, created_at, updated_at 
     FROM users 
     WHERE level = 3 
     ORDER BY created_at DESC 
@@ -318,7 +328,7 @@ router.get('/dashboard', validateAdmin, async (req, res) => {
       // Get recent activities
       new Promise((resolve, reject) => {
         db.query(
-          `SELECT id, email, level, created_at 
+          `SELECT id, email, level, username, created_at 
            FROM users 
            WHERE level IN (2, 3) 
            ORDER BY created_at DESC 
@@ -394,79 +404,6 @@ router.delete('/users/:id', validateAdmin, (req, res) => {
         success: true,
         message: 'User  deleted successfully'
       });
-    });
-  });
-});
-// Endpoint untuk menyimpan profil asesi
-router.post('/profile_asesi', (req, res) => {
-  const { 
-    userId,
-    nama,
-    email,
-    noKTP,
-    tempatLahir,
-    tanggalLahir,
-    jenisKelamin,
-    alamat,
-    noTelepon,
-    pendidikanTerakhir,
-    pekerjaan,
-    namaPerusahaan
-  } = req.body;
-
-  // Validasi data
-  if (!userId || !nama || !email || !noKTP) {
-    return res.status(400).json({ 
-      success: false, 
-      message: 'Data tidak lengkap' 
-    });
-  }
-
-  const query = `
-    INSERT INTO profile_asesi 
-    (user_id, nama, email, no_ktp, tempat_lahir, tanggal_lahir, jenis_kelamin, alamat, no_telepon, pendidikan_terakhir, pekerjaan, nama_perusahaan, created_at, updated_at) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
-    ON DUPLICATE KEY UPDATE
-    nama = VALUES(nama), 
-    email = VALUES(email), 
-    no_ktp = VALUES(no_ktp), 
-    tempat_lahir = VALUES(tempat_lahir), 
-    tanggal_lahir = VALUES(tanggal_lahir), 
-    jenis_kelamin = VALUES(jenis_kelamin), 
-    alamat = VALUES(alamat), 
-    no_telepon = VALUES(no_telepon), 
-    pendidikan_terakhir = VALUES(pendidikan_terakhir), 
-    pekerjaan = VALUES(pekerjaan), 
-    nama_perusahaan = VALUES(nama_perusahaan), 
-    updated_at = NOW()
-  `;
-
-  db.query(query, [
-    userId,
-    nama,
-    email,
-    noKTP,
-    tempatLahir,
-    tanggalLahir,
-    jenisKelamin,
-    alamat,
-    noTelepon,
-    pendidikanTerakhir,
-    pekerjaan,
-    namaPerusahaan
-  ], (err, result) => {
-    if (err) {
-      console.error('Error saving asesi profile:', err);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Gagal menyimpan profil asesi' 
-      });
-    }
-    
-    res.json({
-      success: true,
-      message: 'Profil asesi berhasil disimpan',
-      profileId: result.insertId
     });
   });
 });

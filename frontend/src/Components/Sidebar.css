@@ -32,9 +32,13 @@
   }
   
   .submenu {
+    display: none;
     list-style: none;
-    padding-left: 25px; /* Memberikan jarak dari kiri */
+    padding-left: 20px; /* Memberikan jarak dari kiri */
     margin-top: 5px;
+  }
+  .submenu.open {
+    display: block;
   }
   
   .submenu-item {
@@ -51,6 +55,7 @@
   }
   
   .menu-item {
+    cursor: pointer;
     padding: 8px 0;
     color: #333;
   }
