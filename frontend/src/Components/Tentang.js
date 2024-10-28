@@ -1,116 +1,109 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import './Tentang.css';
+import React, { useState } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import Slider from "react-slick"; // Import react-slick
+import "./Tentang.css";
 
-const Tentang = () => {
+const TentangPage = () => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
+  const faqs = [
+    {
+      question: "Tentang Perusahaan",
+      answer: "LSP Administrasi Perkantoran Indonesia didirikan dengan Akta Notaris No. 01 tanggal 27 Juli 2016, berfungsi dan memiliki tugas melaksanakan uji kompetensi bidang Administrasi Profesional...",
+    },
+    {
+      question: "VISI",
+      answer: "Mewujudkan Lembaga Sertifikasi Profesi Administrasi Perkantoran Indonesia sebagai lembaga sertifikasi yang profesional, independen, akuntabel, transparan, dan terpercaya",
+    },
+    {
+      question: "MISI",
+      answer: "1. Mendukung pengembangan dan pembangunan Sumber Daya Manusia internal dan eksternal yang kompeten dan profesional...",
+    },
+    {
+      question: "Kebijakan Mutu",
+      answer: "Lembaga Sertifikasi Profesi Administrasi Perkantoran Indonesia bertekad mendukung program pemerintah dalam meningkatkan kualitas sumber daya manusia berbasis kompetensi...",
+    },
+    {
+      question: "Sasaran Mutu",
+      answer: "Tercapainya standar mutu sertifikasi profesi yang kredibel, kompeten, dan profesional di seluruh sektor/subsektor...",
+    },
+  ];
+
+  const teamMembers = [
+    { name: "Agus Sumeru, MM", role: "MET.000.003627", image: "../assets/images/header.png" },
+    { name: "Aneta", role: "MET. 000.001261 2022", image: "../assets/images/header.png" },
+    { name: "Bertha Musty", role: "MET.000.004262", image: "../assets/images/header.png" },
+    { name: "Dadan Ramdan H.", role: "MET. 000.001260", image: "../assets/images/header.png" },
+    { name: "Dedi Nurdadi, ST", role: "MET.000.003624", image: "../assets/images/header.png" },
+    { name: "Delicia Purdanisari", role: "MET. 000.001255", image: "../assets/images/header.png" },
+    { name: "Devy Ardhiany Utami", role: "MET. 000.007184", image: "../assets/images/header.png" },
+  ];
+
+  // Slider settings for react-slick
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 7, // Number of items to show at once
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
   return (
-    <section className="container" id="tentang">
-      <h2 className="title">Tentang</h2>
-      
-      {/* Konten Pertama */}
-      <div className="content">
-        <img
-          src="/assets/images/aboutImage.png"
-          alt="Tentang Kami"
-          className="tentangImage"
-        />
-        <ul className="tentangItems">
-          <motion.li
-            className="tentangItem"
-            initial={{ opacity: 0, y: -20 }} // Mulai dari transparan dan sedikit di atas
-            animate={{ opacity: 1, y: 0 }} // Masuk ke posisi normal
-            transition={{ duration: 0.5 }}
-          >
-            <img src="/assets/images/cursorIcon.png" alt="Cursor icon" />
-            <div className="tentangItemText">
-              <h3>Frontend Developer</h3>
-              <p>Saya seorang frontend developer...</p>
+    <div>
+      {/* FAQ Section */}
+      <section className="faq-container" id="faq">
+        <h2 className="title">Tentang</h2>
+        <h4 className="subtitle">Lembaga Sertifikasi Administrasi Perkantoran Indonesia</h4>
+        <div className="faq-items">
+          {faqs.map((faq, index) => (
+            <div key={index} className="faq-item">
+              <div className="faq-question" onClick={() => toggleFAQ(index)}>
+                <h4>{faq.question}</h4>
+                <span>{activeIndex === index ? <FaChevronUp /> : <FaChevronDown />}</span>
+              </div>
+              {activeIndex === index && <div className="faq-answer">{faq.answer}</div>}
             </div>
-          </motion.li>
-          <motion.li
-            className="tentangItem"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }} // Delay untuk efek bertahap
-          >
-            <img src="/assets/images/serverIcon.png" alt="Server icon" />
-            <div className="tentangItemText">
-              <h3>Backend Developer</h3>
-              <p>Saya memiliki pengalaman...</p>
-            </div>
-          </motion.li>
-          <motion.li
-            className="tentangItem"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <img src="/assets/images/uiIcon.png" alt="UI icon" />
-            <div className="tentangItemText">
-              <h3>UI Designer</h3>
-              <p>Saya telah merancang beberapa halaman arahan...</p>
-            </div>
-          </motion.li>
-        </ul>
-      </div>
+          ))}
+        </div>
+      </section>
 
-      {/* Konten Kedua dengan Animasi */}
-      <motion.div
-        className="content"
-        initial={{ opacity: 0 }} // Mulai dari transparan
-        animate={{ opacity: 1 }} // Masuk ke posisi normal
-        exit={{ opacity: 0 }} // Saat keluar, hilang
-        transition={{ duration: 0.5 }} // Durasi animasi
-      >
-        <ul className="tentangItems">
-          <motion.li
-            className="tentangItem"
-            initial={{ opacity: 0, y: -20 }} // Teks masuk dari atas
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <img src="/assets/images/cursorIcon.png" alt="Cursor icon" />
-            <div className="tentangItemText">
-              <h3>Frontend Developer</h3>
-              <p>Saya seorang frontend developer...</p>
-            </div>
-          </motion.li>
-          <motion.li
-            className="tentangItem"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }} // Delay untuk efek bertahap
-          >
-            <img src="/assets/images/serverIcon.png" alt="Server icon" />
-            <div className="tentangItemText">
-              <h3>Backend Developer</h3>
-              <p>Saya memiliki pengalaman...</p>
-            </div>
-          </motion.li>
-          <motion.li
-            className="tentangItem"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <img src="/assets/images/uiIcon.png" alt="UI icon" />
-            <div className="tentangItemText">
-              <h3>UI Designer</h3>
-              <p>Saya telah merancang beberapa halaman arahan...</p>
-            </div>
-          </motion.li>
-        </ul>
-        <motion.img
-          src="/assets/images/aboutImage.png"
-          alt="Tentang Kami"
-          className="tentangImage"
-          initial={{ opacity: 0, y: 20 }} // Gambar mulai dari bawah
-          animate={{ opacity: 1, y: 0 }} // Masuk ke posisi normal
-          transition={{ duration: 0.5, delay: 0.3 }} // Delay agar gambar muncul setelah teks
-        />
-      </motion.div>
-    </section>
+      {/* Team Section */}
+      <section className="team-section">
+        <h2 className="team-title">Data Asesor</h2>
+        <p className="team-subtitle">Para Asesor di Lembaga Sertifikasi Administrasi Perkantoran Indonesia</p>
+        <div className="team-members">
+          <Slider {...sliderSettings} className="team-carousel">
+            {teamMembers.map((member, index) => (
+              <div key={index} className="team-member">
+                <img src={member.image} alt={member.name} className="team-image" />
+                <h4 className="team-name">{member.name}</h4>
+                <p className="team-role">{member.role}</p>
+              </div>
+            ))}
+          </Slider>
+          <button className="contact-button">Contact Us</button>
+        </div>
+      </section>
+    </div>
   );
 };
 
-export default Tentang;
+export default TentangPage;
