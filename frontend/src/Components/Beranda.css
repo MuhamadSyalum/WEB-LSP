@@ -1,33 +1,173 @@
 .beranda-section {
-    padding: 50px 0;
-    text-align: center;
-  }
-  .beranda-container {
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-   
-  .canvas-container {
-    width: 100%;
-    height: 500px; /* Atur ukuran kanvas */
-    margin-top: 20px;
-    max-width: 600px; /* Tentukan lebar maksimal untuk model 3D */
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    color: #333;
-  }
-  
-  p {
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 30px;
-  }
-  
+  padding: 50px 0;
+  text-align: center;
+}
+.beranda-container {
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.canvas-container {
+  width: 100%;
+  height: 500px; /* Atur ukuran kanvas */
+  margin-top: 20px;
+  max-width: 600px; /* Tentukan lebar maksimal untuk model 3D */
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.head {
+  height: 100vh; /* Mengisi seluruh tinggi viewport */
+  width: 100vw; /* Mengisi seluruh lebar viewport */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  transform: rotateY(-15deg); /* Memiringkan elemen secara horizontal */
+  transition: transform 0.3s ease;
+  perspective: 1000px;
+}
+
+.left-side {
+  flex: 1;
+}
+
+.right-side {
+  flex: 2;
+  text-align: center;
+}
+
+/* Styling Gambar */
+.image-head {
+  max-width: 100%;
+  height: auto;
+  margin-right: 20px;
+}
+
+/* Info Boxes */
+.info-boxes {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.info-box {
+  background: linear-gradient(145deg, #0f044c, #796acf);
+  padding: 20px 20px;
+  border-radius: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(255, 89, 89, 0.6);
+  transform: rotateX(10deg) rotateY(-15deg); /* Kemiringan 3D */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: white; /* Warna teks putih untuk kontras */
+}
+
+.info-box h3 {
+  background-color: #eb8317;
+  padding: 5px;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 24px;
+  margin: 0;
+}
+
+.info-box p {
+  color: #ffffff;
+  font-size: 14px;
+  margin: 5px 0 0;
+}
+
+/* Header dan Deskripsi */
+h1 {
+  color: #0f044c;
+  font-size: 45px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  transform: rotateX(15deg);
+}
+
+p {
+  font-size: 18px;
+  color: #2108b4;
+  margin-bottom: 20px;
+}
+
+/* Tombol */
+.buttons-head {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  padding: 10px 30px;
+  font-size: 16px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #aebbcc;
+  color: #0f044c;
+}
+
+.btn:hover {
+  background-color: #1c025a;
+  color: white;
+}
+
+/* Footer Text */
+.footer-text {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 40px;
+}
+
+.footer-text span {
+  font-size: 14px;
+  color: #1c025a;
+  text-transform: uppercase;
+}
+
+.counter-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 0;
+  background-color: #1c025a;
+}
+
+.counter-box {
+  text-align: center;
+  margin: 0 20px;
+}
+
+.counter-box h2 {
+  font-size: 3rem;
+  color: #eb8317;
+  margin-bottom: 10px;
+}
+
+.counter-box p {
+  font-size: 1.2rem;
+  color: #ffffff;
+}
