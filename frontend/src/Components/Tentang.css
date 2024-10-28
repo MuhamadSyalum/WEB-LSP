@@ -1,97 +1,115 @@
+/* css carousel */
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 
-.container {
+/* FAQ Section Styles */
+.faq-container {
   position: relative;
   background: transparent;
-  border-radius: 15px;
-  padding: 73px;
-  margin-top: 129px;
-  z-index: 1;
-  width: 100%; /* Lebar kontainer 100% */
-  max-width: 1200px; /* Atur lebar maksimum sesuai kebutuhan */
   display: flex; /* Gunakan flexbox untuk pemusatan */
   flex-direction: column; /* Konten dalam kolom */
   align-items: center; /* Pusatkan konten secara horizontal */
   margin-left: auto; /* Atur margin kiri otomatis */
-  margin-right: auto; /* Atur margin kanan otomatis */
+  margin-right: auto;
+  margin-top: 100px;
+  max-width: 800px;
 }
 
-
-.title {
-  color: var(--color-text);
-  font-size: 35px;
-  font-weight: 700;
-  letter-spacing: 1.75px;
-  text-transform: uppercase;
+.faq-items {
+  border-top: 1px solid #0f044c;
 }
 
-.content {
+.faq-item {
+  padding: 10px;
+  border-bottom: 1px solid #0f044c;
+}
+
+.faq-question {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+  background-color: #0f044c;
+  color: aliceblue;
+  padding: 5px;
 }
 
-.tentangImage {
-  width: 35%;
+.faq-question h4 {
+  margin: 0;
+  font-size: 18px;
 }
 
-.tentangItems {
-  color: var(--color-text);
+.faq-answer {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #000000;
+}
+
+span {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+/* section asesor Styles */
+.team-section {
+  text-align: center;
+  padding: 40px 100px;
+  justify-items: center;
+  justify-content: center;
+}
+
+.team-title {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+.team-subtitle {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.team-member {
+  background-color: #ded8fd;
   display: flex;
-  flex-direction: column;
-  gap: 50px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+
+  gap: 20px;
+  padding: 20px;
 }
 
-.tentangItem {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.team-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  justify-items: center;
+  justify-content: center;
+}
+
+.team-name {
+  font-size: 0.9em;
+  margin: 5px 0;
+}
+
+.team-role {
+  font-size: 0.8em;
+  color: #eb8317;
+}
+
+.contact-button {
+  background-color: #0f044c;
+  margin-bottom: 10px;
+  color: #fff;
+  justify-content: center;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
   border-radius: 20px;
-  list-style: none;
-  padding: 25px;
-  background-image: linear-gradient(
-    90deg,
-    rgba(165, 215, 232, 0.42) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 0 100%;
-  background-repeat: no-repeat;
-  transition: 0.4s;
+  cursor: pointer;
 }
 
-.tentangItem:hover {
-  background-size: 100% 100%;
-}
-
-.tentangItem h3 {
-  font-size: 25px;
-  font-weight: 600;
-}
-
-.tentangItem p {
-  font-size: 25px;
-}
-
-@media screen and (max-width: 830px) {
-  .container {
-    background-color: transparent;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .content {
-    flex-direction: column;
-  }
-
-  .tentangImage {
-    display: none;
-  }
-
-  .tentangItems {
-    margin-top: 29px;
-  }
-
-  .tentangItem {
-    padding-left: 0;
-    padding-right: 0;
-  }
+.contact-button:hover {
+  background-color: #0a0236;
 }
