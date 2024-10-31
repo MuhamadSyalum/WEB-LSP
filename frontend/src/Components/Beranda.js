@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import Navbar from "./MyNavbar";
 
 import "./Beranda.css";
 
@@ -31,11 +32,11 @@ const CounterSection = () => {
   }, []);
 
   const incrementNumbers = () => {
-    incrementValue(setProjectsCompleted, 100);
-    incrementValue(setSatisfiedClients, 29);
+    incrementValue(setProjectsCompleted, 1000);
+    incrementValue(setSatisfiedClients, 28);
     incrementValue(setPublicPlace, 50);
     incrementValue(setSuccessRate, 96);
-    incrementValue(setYearsExperience, 10);
+    incrementValue(setYearsExperience, 6);
   };
 
   const incrementValue = (setFunction, target) => {

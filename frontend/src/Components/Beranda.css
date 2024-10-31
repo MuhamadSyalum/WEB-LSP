@@ -116,20 +116,25 @@ p {
   display: flex;
   justify-content: center;
   gap: 20px;
-}
-
-.btn {
   padding: 10px 30px;
   font-size: 16px;
-  border-radius: 25px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  background-color: #aebbcc;
-  color: #0f044c;
 }
 
-.btn:hover {
+.request-demo {
+  border-radius: 15px;
+  background-color: #0f044c;
+  color: white;
+}
+
+.lets-begin {
+  border-radius: 15px;
+  background-color: #0f044c;
+  color: #ffffff;
+}
+
+.lets-begin:hover {
   background-color: #1c025a;
   color: white;
 }
