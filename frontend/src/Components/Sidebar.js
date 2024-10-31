@@ -6,8 +6,7 @@ const Sidebar = () => {
   const [isUsersOpen, setIsUsersOpen] = useState(false);
 
   const toggleUsers = () => {
-    console.log('Toggle Users clicked'); // Tambahkan log ini
-    setIsUsersOpen(prevState => !prevState);
+    setIsUsersOpen(!isUsersOpen);
   };
 
   return (
@@ -25,10 +24,12 @@ const Sidebar = () => {
           >
             Manage Users {isUsersOpen ? '▼' : '▶'}
           </div>
-          <ul className={`submenu ${isUsersOpen ? 'open' : ''}`}>
-            <li className="submenu-item"><Link to="/admin/Asesor">Manage Asesor</Link></li>
-            <li className="submenu-item"><Link to="/admin/Asesi">Manage Asesi</Link></li>
-          </ul>
+          {isUsersOpen && (
+            <ul className="submenu">
+              <li className="submenu-item"><Link to="/admin/Asesor">Manage Asesor</Link></li>
+              <li className="submenu-item"><Link to="/admin/Asesi">Manage Asesi</Link></li>
+            </ul>
+          )}
         </li>
         <li>
           <Link to="/admin/settings">Settings</Link>

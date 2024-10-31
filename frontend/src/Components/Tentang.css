@@ -15,6 +15,11 @@
   max-width: 800px;
 }
 
+.faq-container h2 {
+  color: #000000;
+  font-size: 40px;
+}
+
 .faq-items {
   border-top: 1px solid #0f044c;
 }
@@ -53,7 +58,7 @@ span {
 /* section asesor Styles */
 .team-section {
   text-align: center;
-  padding: 40px 100px;
+
   justify-items: center;
   justify-content: center;
 }
@@ -63,8 +68,12 @@ span {
   margin-bottom: 10px;
 }
 
+.team-section h2,
+p {
+  color: #000000;
+}
 .team-subtitle {
-  font-size: 1em;
+  font-size: 0.8em;
   color: #666;
   margin-bottom: 30px;
 }
@@ -74,7 +83,6 @@ span {
   display: flex;
   margin-bottom: 20px;
   flex-wrap: wrap;
-
   gap: 20px;
   padding: 20px;
 }

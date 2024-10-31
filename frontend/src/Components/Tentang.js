@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Slider from "react-slick"; // Import react-slick
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import "./Tentang.css";
 
 const TentangPage = () => {
@@ -99,7 +100,6 @@ const TentangPage = () => {
               </div>
             ))}
           </Slider>
-          <button className="contact-button">Contact Us</button>
         </div>
       </section>
     </div>

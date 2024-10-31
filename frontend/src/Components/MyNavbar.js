@@ -1,40 +1,37 @@
-import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import './MyNavbar.css';
-import { Link } from 'react-router-dom';
-
+import React from "react";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { FaSignInAlt } from "react-icons/fa"; // Icon login
+import "./MyNavbar.css";
 
 const MyNavbar = () => {
   return (
     <Navbar bg="light" expand="lg" className="navbar-custom">
       <Container fluid>
-        <Navbar.Brand as={Link} to="/">
-          <img
-            src="/assets/images/logo.png"
-            alt="Logo"
-            className="navbar-logo"
-          />
+        <Navbar.Brand as={Link} to="/" className="navbar-logo-container">
+          <img src="/assets/images/logo.png" alt="Logo" className="navbar-logo" />
+          <span className="navbar-title">My Website</span> {/* Menambahkan judul */}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
+        <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto">
-          <Nav.Link as={Link} to="/">Beranda</Nav.Link>
-          <Nav.Link href="#sertifikasi">Sertifikasi</Nav.Link>
-            <Nav.Link href="#tutorial">Tutorial</Nav.Link>
-            <Nav.Link href="#tentang">Tentang</Nav.Link>
-            <Nav.Link href="#galeri">Galeri</Nav.Link>
-            <Nav.Link href="#dataasesor">Data Asesor</Nav.Link>
-            <Nav.Link href="#kontak">Kontak</Nav.Link>
+            <Nav.Link as={Link} to="/" className="nav-link-custom">Beranda</Nav.Link>
+            <Nav.Link href="#sertifikasi" className="nav-link-custom">Sertifikasi</Nav.Link>
+            <Nav.Link href="#tutorial" className="nav-link-custom">Tutorial</Nav.Link>
+            <Nav.Link href="#tentang" className="nav-link-custom">Tentang</Nav.Link>
+            <Nav.Link href="#galeri" className="nav-link-custom">Galeri</Nav.Link>
+            <Nav.Link href="#dataasesor" className="nav-link-custom">Data Asesor</Nav.Link>
+            <Nav.Link href="#kontak" className="nav-link-custom">Kontak</Nav.Link>
           </Nav>
           <Nav className="ms-auto">
             <Nav.Link as={Link} to="/login" className="login-button">
-              Login
+              <FaSignInAlt className="login-icon" /> Login
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
-}
+};
 
 export default MyNavbar;
