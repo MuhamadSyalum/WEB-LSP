@@ -5,7 +5,6 @@ import Tentang from "../../components/Tentang";
 import Galeri from "../../components/Galeri";
 import MyNavbar from "../../components/MyNavbar";
 import Footer from "../../components/Footer";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 const Home = () => {
