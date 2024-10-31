@@ -1,47 +1,78 @@
-/* Mengatur padding navbar agar nol, membuat container berada di atas */
+/* Style dasar untuk navbar */
 .navbar-custom {
-  background-color: transparent; /* Tetap transparan */
-  box-shadow: none; /* Menghapus bayangan */
-  padding: 0; /* Padding nol agar posisi lebih rapat ke atas */
-  margin: 0; /* Hapus margin jika ada */
+  background-color: #f8f9fa; /* Warna background navbar */
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+  z-index: 10;
 }
 
-/* Mengatur container agar berada di bagian paling atas */
-.navbar-custom .container {
-  padding: 0; /* Hapus padding dari Container */
-  margin: 0; /* Hapus margin agar benar-benar di atas */
+.navbar-logo-container {
+  display: flex;
+  align-items: center;
 }
 
-/* Mengatur logo agar tetap proporsional */
 .navbar-logo {
-  width: 120px; /* Sesuaikan ukuran logo */
-  margin: 0; /* Hapus margin tambahan jika ada */
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
 }
 
-/* Mengatur jarak antara nav-link */
-.navbar-nav .nav-link {
-  font-size: 18px;
-  color: #08012e;
-  margin-right: 20px;
+.navbar-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #007bff; /* Warna teks */
 }
 
-/* Hover effect untuk nav-link */
-.navbar-nav .nav-link:hover {
-  color: #eb8317;
+/* Gaya untuk tautan navbar */
+.nav-link-custom {
+  color: #333;
+  font-size: 1rem;
+  margin: 0 0.75rem;
+  position: relative;
   transition: color 0.3s ease;
 }
 
-/* Mengatur posisi tombol login */
-.login-button {
-  margin-left: auto; /* Membuat tombol login di pojok kanan */
+.nav-link-custom:hover {
+  color: #007bff;
+}
+
+.nav-link-custom::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
   background-color: #007bff;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  text-decoration: none;
+  bottom: -5px;
+  left: 0;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.nav-link-custom:hover::after {
+  transform: scaleX(1);
+}
+
+/* Tombol Login */
+.login-button {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: #007bff;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .login-button:hover {
-  background-color: #0056b3;
-  color: white;
+  color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.login-icon {
+  margin-right: 5px;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 992px) {
+  .navbar-custom {
+    padding: 0.75rem;
+  }
 }
