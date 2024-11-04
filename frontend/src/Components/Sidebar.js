@@ -24,12 +24,10 @@ const Sidebar = () => {
           >
             Manage Users {isUsersOpen ? '▼' : '▶'}
           </div>
-          {isUsersOpen && (
-            <ul className="submenu">
-              <li className="submenu-item"><Link to="/admin/Asesor">Manage Asesor</Link></li>
-              <li className="submenu-item"><Link to="/admin/Asesi">Manage Asesi</Link></li>
-            </ul>
-          )}
+          <ul className={`submenu ${isUsersOpen ? 'open' : ''}`}>
+            <li className="submenu-item"><Link to="/admin/asesor">Manage Asesor</Link></li>
+            <li className="submenu-item"><Link to="/admin/asesi">Manage Asesi</Link></li>
+          </ul>
         </li>
         <li>
           <Link to="/admin/settings">Settings</Link>

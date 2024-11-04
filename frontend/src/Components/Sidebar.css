@@ -1,64 +1,68 @@
 .sidebar {
-    width: 250px;
-    background-color: #f5f5f5;
-    padding: 20px;
-    height: 100vh;
-  }
-  
-  .sidebar h2 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .main-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .main-menu li {
-    margin-bottom: 10px;
-  }
-  
-  .sidebar a {
-    text-decoration: none;
-    color: #333;
-    display: block;
-    padding: 8px 0;
-  }
-  
-  .sidebar a:hover {
-    color: #007bff;
-  }
-  
-  .submenu {
-    list-style: none;
-    padding-left: 25px; /* Memberikan jarak dari kiri */
-    margin-top: 5px;
-  }
-  
-  .submenu-item {
-    margin-left: 15px; /* Memberikan jarak tambahan untuk item submenu */
-    position: relative;
-  }
-  
-  /* Menambahkan bullet/dot di depan submenu item */
-  .submenu-item::before {
-    content: "•";
-    position: absolute;
-    left: -15px;
-    color: #666;
-  }
-  
-  .menu-item {
-    padding: 8px 0;
-    color: #333;
-  }
-  
-  .menu-item:hover {
-    color: #007bff;
-  }
-  
-  .menu-item.active {
-    color: #007bff;
-  }
+  width: 250px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  height: 100vh;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.main-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.main-menu li {
+  margin-bottom: 10px;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 8px 0;
+}
+
+.sidebar a:hover {
+  color: #007bff;
+}
+
+.submenu {
+  list-style: none;
+  padding-left: 25px; /* Indentation for submenu */
+  margin-top: 5px;
+  display: none; /* Hide submenu by default */
+}
+
+.submenu.open {
+  display: block; /* Show submenu when open */
+}
+
+.submenu-item {
+  margin-left: 15px; /* Additional left margin for submenu items */
+  position: relative;
+}
+
+.submenu-item::before {
+  content: "•";
+  position: absolute;
+  left: -15px;
+  color: #666;
+}
+
+.menu-item {
+  padding: 8px 0;
+  color: #333;
+}
+
+.menu-item:hover {
+  color: #007bff;
+}
+
+.menu-item.active {
+  color: #007bff;
+}
