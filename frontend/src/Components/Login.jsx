@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
 import { LoginUser, reset } from "../features/authSlice";
 
 const Login = () => {

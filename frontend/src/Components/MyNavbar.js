@@ -1,16 +1,22 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { FaSignInAlt } from "react-icons/fa"; // Icon login
+import { Link, useNavigate } from "react-router-dom";
+import { FaSignInAlt } from "react-icons/fa";
 import "./MyNavbar.css";
 
 const MyNavbar = () => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
   return (
     <Navbar bg="light" expand="lg" className="navbar-custom">
       <Container fluid>
         <Navbar.Brand as={Link} to="/" className="navbar-logo-container">
           <img src="/assets/images/logo.png" alt="Logo" className="navbar-logo" />
-          <span className="navbar-title">My Website</span> {/* Menambahkan judul */}
+          <span className="navbar-title">My Website</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -24,7 +30,7 @@ const MyNavbar = () => {
             <Nav.Link href="#kontak" className="nav-link-custom">Kontak</Nav.Link>
           </Nav>
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/login" className="login-button">
+            <Nav.Link onClick={handleLoginClick} className="login-button">
               <FaSignInAlt className="login-icon" /> Login
             </Nav.Link>
           </Nav>
