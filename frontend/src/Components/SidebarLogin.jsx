@@ -30,6 +30,11 @@ const SidebarLogin = () => {
               <IoPricetag /> berita
             </NavLink>
           </li>
+          <li>
+            <NavLink to={"/products"}>
+              <IoPricetag /> product
+            </NavLink>
+          </li>
         </ul>
         {user && user.role === "admin" && (
           <div>

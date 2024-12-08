@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Layout from "./Layout";
-import FormAddBerita from "../components/FormAddBerita";
+import FormAddBerita from "../components/FormAddBerita.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";

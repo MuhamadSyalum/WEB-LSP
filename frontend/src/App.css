@@ -11,6 +11,7 @@ html {
 
 body {
   font-family: "Playfair Display", serif;
+  background: linear-gradient(135deg, #04d1f1, #04f192); /* Gradiasi biru ke hijau */
 }
 
 .bg-blue {
@@ -23,6 +24,7 @@ section {
 
 .sertifikasi-container {
   padding: 50px 20px;
+
   text-align: center;
   min-height: 120vh; /* Full page height */
   display: flex;
@@ -45,17 +47,17 @@ section {
 }
 
 .card {
-  background-color: #08012e; /* Warna biru hanya pada card */
+  background: #72f805; /* Warna biru hanya pada card */
   border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(233, 5, 5, 0.1);
   padding: 20px;
   height: 300px;
   width: 400px;
-  color: white; /* Teks warna putih di atas card biru */
+  color: rgb(15, 14, 14); /* Teks warna putih di atas card biru */
 }
 
 .card h2 {
-  color: #f4f4f4;
+  color: #151414;
   font-size: 2.3rem;
   margin-bottom: 25px;
   font-family: "Times New Roman", Times, serif;
@@ -64,7 +66,7 @@ section {
 .card p {
   font-size: 1rem;
   margin-top: 15px;
-  color: #f5f4f4;
+  color: #020202;
 }
 
 /* Tombol Selanjutnya */
@@ -92,7 +94,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f4f4f4;
+  background-color: #6cf50a;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);

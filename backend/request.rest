@@ -1,12 +1,12 @@
 POST http://localhost:5000/users
-Content-Type: application/json
-
 {
-    "name" : "Msyalum",
-    "email" : "msyalum@gmail.com",
-    "password" : "123456",
-    "confPassword" : "123456",
-    "role" : "admin"
+   
+    "email": "john.doe@example.com",
+    "password": "password123",
 }
 ###
-GET http://localhost:5000/users
+get http://localhost:5000/infos
+###
+get http://localhost:5000/Asesors
+###
+get http://localhost:5000/Products
