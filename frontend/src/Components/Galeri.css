@@ -1,3 +1,4 @@
+/* CSS Updates */
 .galeri-section {
   padding: 50px 0;
 }
@@ -5,48 +6,59 @@
 .slider-container {
   width: 90%;
   margin: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Layout grid fleksibel */
-  gap: 600px; /* Jarak antar item */
 }
 
 .slider-item {
   padding: 10px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   transition: transform 0.3s ease; /* Animasi saat transisi item */
 }
 
-.galeri-img {
+.image-wrapper {
+  position: relative;
   width: 100%;
   height: 250px; /* Menyesuaikan tinggi */
+}
+
+.galeri-img {
+  width: 100%;
+  height: 100%;
   object-fit: cover; /* Memastikan gambar tetap rapi */
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Shadow awal */
   transition: transform 0.4s ease, box-shadow 0.4s ease; /* Efek halus pada transformasi */
 }
 
-/* Menambahkan efek hover untuk gambar */
-.galeri-img:hover {
-  transform: scale(1.05); /* Efek zoom */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Shadow lebih dalam saat hover */
-  cursor: pointer;
+.image-title {
+  margin-top: 10px;
+  font-size: 1.2em;
+  text-align: center;
 }
 
-/* Efek saat gambar dihover, membuat animasi menarik */
-.slider-item:hover {
-  transform: scale(1.02); /* Animasi smooth saat item di-hover */
-}
-
-.lightbox {
-  position: fixed;
+.overlay {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-wrapper:hover .overlay {
+  opacity: 1; /* Menampilkan keterangan saat hover */
+}
+
+.galeri-img:hover {
+  transform: scale(1.05); /* Efek zoom */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Shadow lebih dalam saat hover */
+  cursor: pointer;
 }

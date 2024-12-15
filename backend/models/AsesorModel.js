@@ -15,6 +15,6 @@ const Asesor = db.define('asesor', {
 
 export default Asesor;
 
- (async () => {
-     await db.sync();
- })();
+ //(async () => {
+   //  await db.sync();
+ //})();

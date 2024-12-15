@@ -1,6 +1,6 @@
 import React from "react";
-import NavbarLogin from "../components/NavbarLogin"; // Correctly imported
-import SidebarLogin from "../components/SidebarLogin"; // Correctly imported
+import NavbarLogin from "../components/NavbarLogin"; 
+import SidebarLogin from "../components/SidebarLogin"; 
 
 const Layout = ({ children }) => {
   return (

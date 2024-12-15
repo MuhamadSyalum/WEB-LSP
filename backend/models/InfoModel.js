@@ -27,6 +27,6 @@ const Info = db.define('info', {
 
 export default Info;
 
- (async () => {
-     await db.sync();
- })();
+ //(async () => {
+  //   await db.sync();
+ //})();
